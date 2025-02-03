@@ -1,42 +1,53 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+.main{
+  width: 100%;
+  min-height: 100vh;
+  background-color: rgb(233, 203, 105);
+  color: rgb(35, 109, 194);
+  padding: 2rem 4rem;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+.flex{
+  display: flex;
+  flex-direction: column;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.add-data{
+  margin-top: 2rem;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+form{
+  width: fit-content;
+  margin-top: .5rem;
 }
 
-.card {
-  padding: 2em;
+.inp-wrp{
+  display: flex;
 }
 
-.read-the-docs {
-  color: #888;
+.amount{
+  margin-left: 4rem;
+}
+
+.submit-btn{
+  text-align: end;
+  margin-top: .5rem;
+}
+
+input{
+  border: none;
+  background-color: rgb(125, 184, 250);
+  padding: .5rem .5rem;
+  outline: none;
+  border-radius: 10px;
+  color: white;
+}
+
+input[type="text"] {
+  width: 20rem;
+}
+
+input[type="submit"] {
+  border: 2px solid yellow;
+  color: white;
+  cursor: pointer;
 }
