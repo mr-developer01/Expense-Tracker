@@ -51,3 +51,33 @@ input[type="submit"] {
   color: white;
   cursor: pointer;
 }
+
+.expense-table{
+  width: 100%;
+  /* background-color: red; */
+}
+
+th {
+  text-align: left;
+  padding: 1rem;
+  /* background-color: red; */
+}
+
+td{
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 1rem;
+}
+
+tr:nth-child(even) {
+  background-color: #c0c0c0;
+}
+
+.cta-btn{
+  padding: .2rem 1rem;
+  cursor: pointer;
+  border: none;
+  color: white;
+  background-color: rgb(192, 111, 125);
+  border-radius: 5px;
+}
