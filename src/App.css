@@ -11,6 +11,19 @@
   flex-direction: column;
 }
 
+.flex-2{
+  display: flex;
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+.lbl-check{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .6rem;
+}
+
 .add-data{
   margin-top: 2rem;
 }
