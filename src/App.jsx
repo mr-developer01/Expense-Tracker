@@ -1,18 +1,36 @@
-import React, { useRef } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import "./App.css";
 
 const App = () => {
+  const [expenseData, setExpenseData] = useState([]);
+  console.log(expenseData);
   const desc = useRef(null);
   const amount = useRef(null);
 
   const submitExpance = (e) => {
-    e.preventDefault()
-    console.log(desc.current.value)
-    console.log(amount.current.value)
-    console.log("Working...")
-    desc.current.value = ""
-    amount.current.value = ""
-  }
+    e.preventDefault();
+    const newExpense = {
+      descData: desc.current.value,
+      amountData: amount.current.value,
+    };
+    setExpenseData((prevData) => [...prevData, newExpense]);
+    desc.current.value = "";
+    amount.current.value = "";
+  };
+
+  useEffect(() => {
+    const storedData = localStorage.getItem("expenses");
+    if (storedData) {
+      setExpenseData(JSON.parse(storedData));
+    }
+  }, []);
+
+  useEffect(() => {
+    if (expenseData.length > 0) {
+      localStorage.setItem("expenses", JSON.stringify(expenseData));
+    }
+  }, [expenseData]);
+
   return (
     <div className="main">
       <h1>Total Expenses : Rs 15000</h1>
