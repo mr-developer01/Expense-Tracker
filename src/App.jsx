@@ -6,6 +6,7 @@ const App = () => {
   const [expenseData, setExpenseData] = useState([]);
   const [filterExpense, setFilterExpense] = useState([]);
   const [selectedExpense, setSelectedExpense] = useState(null);
+  const [editExpense, setEditExpense] = useState(false);
 
   console.log(expenseData)
   console.log(filterExpense)
@@ -14,6 +15,7 @@ const App = () => {
   const desc = useRef(null);
   const expType = useRef(null);
   const amount = useRef(null);
+  const editText = useRef("Edit")
 
   const submitExpance = (e) => {
     e.preventDefault();
@@ -62,12 +64,15 @@ const App = () => {
     
     const newData = expenseData.map((data) => {
       if (data.id === id) {
-        data.descData = "AAAAA";
+        data.descData = "RRRR";
         data.amountData = 12;
       }
       return data;
     });
     setExpenseData(newData);
+    setFilterExpense(newData);
+    setEditExpense(!editExpense)
+    editExpense ? editText.current = "Update" : editText.current = "Edit";
   };
 
   const handleChange = (value) => {
@@ -153,14 +158,14 @@ const App = () => {
             <tbody>
               {filterExpense.map((data) => (
                 <tr key={data.id}>
-                  <th>{data.descData}</th>
+                  <th className={"abc"}>{data.descData}</th>
                   <th>{data.amountData}</th>
                   <th>
                     <button
                       onClick={() => handleEdit(data.id)}
                       className="cta-btn"
                     >
-                      Edit
+                      {editExpense ? editText.current : editText.current}
                     </button>
                   </th>
                   <th>
