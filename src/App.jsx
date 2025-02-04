@@ -4,14 +4,16 @@ import { uid } from "uid";
 
 const App = () => {
   const [expenseData, setExpenseData] = useState([]);
-  const [filterExpense, setFilterExpense] = useState(expenseData);
-  console.log(filterExpense, "FilterArr");
+  const [filterExpense, setFilterExpense] = useState([]);
+  const [selectedExpense, setSelectedExpense] = useState(null);
+
+  console.log(expenseData)
+  console.log(filterExpense)
+  
 
   const desc = useRef(null);
   const expType = useRef(null);
   const amount = useRef(null);
-
-  // console.log(expType)
 
   const submitExpance = (e) => {
     e.preventDefault();
@@ -22,8 +24,8 @@ const App = () => {
       amountData: Number(amount.current.value),
     };
 
-    console.log(newExpense);
     setExpenseData((prevData) => [...prevData, newExpense]);
+    setFilterExpense(expenseData)
     desc.current.value = "";
     amount.current.value = "";
     expType.current.value = "";
@@ -31,9 +33,9 @@ const App = () => {
 
   useEffect(() => {
     const storedData = localStorage.getItem("expenses");
-    console.log(storedData);  
     if (storedData) {
       setExpenseData(JSON.parse(storedData));
+      setFilterExpense(JSON.parse(storedData))
     }
   }, []);
 
@@ -52,20 +54,49 @@ const App = () => {
       return data.id !== id;
     });
     setExpenseData(newData);
+    setFilterExpense(newData);
+    setSelectedExpense(null)
   };
 
   const handleEdit = (id) => {
-    // console.log(id);
+    
     const newData = expenseData.map((data) => {
       if (data.id === id) {
-        // console.log("abc");
         data.descData = "AAAAA";
         data.amountData = 12;
       }
       return data;
     });
-    // console.log(newData);
     setExpenseData(newData);
+  };
+
+  const handleChange = (value) => {
+    setSelectedExpense(value);
+
+    if (value === "1") {
+      const filt = expenseData.filter((data) => {
+        return data?.expTypeData === "travel";
+      });
+      setFilterExpense(filt)
+    }
+
+    if (value === "2") {
+      const filt = expenseData.filter((data) => {
+        return data?.expTypeData === "cloth";
+      });
+      setFilterExpense(filt)
+    }
+
+    if (value === "3") {
+      const filt = expenseData.filter((data) => {
+        return data?.expTypeData === "food";
+      });
+      setFilterExpense(filt)
+    }
+
+    if (value === "4") {
+      setFilterExpense(expenseData)
+    }
   };
 
   return (
@@ -77,15 +108,31 @@ const App = () => {
           <div className="inp-wrp">
             <div className="description flex">
               <label htmlFor="desc">Description</label>
-              <input ref={desc} id="desc" type="text" placeholder="Expense Description" />
+              <input
+                ref={desc}
+                id="desc"
+                type="text"
+                placeholder="Expense Description"
+              />
             </div>
             <div className="amount flex">
               <label htmlFor="expType">Expense Type</label>
-              <input ref={expType} id="expType" type="text" placeholder="cloth, travel or food" />
+              <input
+                ref={expType}
+                id="expType"
+                type="text"
+                placeholder="cloth, travel or food"
+              />
             </div>
             <div className="amount flex">
               <label htmlFor="amt">Amount</label>
-              <input ref={amount} id="amt" type="number" step="any" placeholder="Add expense amount" />
+              <input
+                ref={amount}
+                id="amt"
+                type="number"
+                step="any"
+                placeholder="Add expense amount"
+              />
             </div>
           </div>
           <div className="submit-btn">
@@ -104,7 +151,7 @@ const App = () => {
               </tr>
             </thead>
             <tbody>
-              {expenseData.map((data) => (
+              {filterExpense.map((data) => (
                 <tr key={data.id}>
                   <th>{data.descData}</th>
                   <th>{data.amountData}</th>
@@ -130,16 +177,44 @@ const App = () => {
           </table>
           <div className="flex-2">
             <div className="lbl-check">
-              <label htmlFor="travel">Travel expense</label>
-              <input id="travel" value="1" type="checkbox" />
+              <label htmlFor="travel">Travel Expenses</label>
+              <input
+                checked={selectedExpense === "1"}
+                onChange={() => handleChange("1")}
+                id="travel"
+                value="1"
+                type="checkbox"
+              />
             </div>
             <div className="lbl-check">
-              <label htmlFor="cloth">Cloth expense</label>
-              <input id="cloth" value="1" type="checkbox" />
+              <label htmlFor="cloth">Cloth Expenses</label>
+              <input
+                checked={selectedExpense === "2"}
+                onChange={() => handleChange("2")}
+                id="cloth"
+                value="2"
+                type="checkbox"
+              />
             </div>
             <div className="lbl-check">
-              <label htmlFor="food">Food expense</label>
-              <input id="food" value="1" type="checkbox" />
+              <label htmlFor="food">Food Expenses</label>
+              <input
+                checked={selectedExpense === "3"}
+                onChange={() => handleChange("3")}
+                id="food"
+                value="3"
+                type="checkbox"
+              />
+            </div>
+            <div className="lbl-check">
+              <label htmlFor="food">All Expenses</label>
+              <input
+                checked={selectedExpense === "4"}
+                onChange={() => handleChange("4")}
+                id="all"
+                value="4"
+                type="checkbox"
+              />
             </div>
           </div>
         </div>
