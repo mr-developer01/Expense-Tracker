@@ -25,7 +25,7 @@ const App = () => {
     };
 
     setExpenseData((prevData) => [...prevData, newExpense]);
-    setFilterExpense(expenseData)
+    setFilterExpense((prevData) => [...prevData, newExpense]);
     desc.current.value = "";
     amount.current.value = "";
     expType.current.value = "";
